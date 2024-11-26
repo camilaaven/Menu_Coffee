@@ -732,14 +732,14 @@ window.addEventListener("scroll", () => {
     }
 
     hr {
-        width: 260px;
+        width: 380px;
         margin-left: 4%;
         margin-top: -80px;
     }
 
     #l2 {
         margin-top: 20px;
-        width: 170px;
+        width: 230px;
         margin-left: 20%;
     }
 
@@ -817,13 +817,13 @@ window.addEventListener("scroll", () => {
     #l1 {
         margin-top: -11px;
         width: 60px;
-        margin-left: 72%;
+        margin-left: 78%;
     }
     #amasijos{
       height: 200px;
       width: 80px;
       font-family: 'Jura', sans-serif;
-      margin-left: 94px;
+      margin-left: 164px;
       font-size: 14px;
       margin-top: 20px;
     }
@@ -831,7 +831,7 @@ window.addEventListener("scroll", () => {
         height: 200px;
         width: 80px;
         font-family: 'Jura', sans-serif;
-        margin-left: 94px;
+        margin-left: 164px;
         font-size: 14px;
         margin-top: -10px;
     }
@@ -839,7 +839,7 @@ window.addEventListener("scroll", () => {
         height: 200px;
         width: 80px;
         font-family: 'Jura', sans-serif;
-        margin-left: 94px;
+        margin-left: 164px;
         font-size: 14px;
         margin-top: 60px;
         transition: transform 0.3s ease, color 0.3s ease; 
@@ -848,7 +848,7 @@ window.addEventListener("scroll", () => {
         height: 200px;
         width: 80px;
         font-family: 'Jura', sans-serif;
-        margin-left: 94px;
+        margin-left: 164px;
         font-size: 14px;
         margin-top: 60px;
         transition: transform 0.3s ease, color 0.3s ease; 
@@ -857,7 +857,7 @@ window.addEventListener("scroll", () => {
         height: 200px;
         width: 80px;
         font-family: 'Jura', sans-serif;
-        margin-left: 94px;
+        margin-left: 164px;
         font-size: 14px;
         margin-top: 20px;
         transition: transform 0.3s ease, color 0.3s ease; 
@@ -866,7 +866,7 @@ window.addEventListener("scroll", () => {
         height: 200px;
         width: 80px;
         font-family: 'Jura', sans-serif;
-        margin-left: 94px;
+        margin-left: 164px;
         font-size: 14px;
         margin-top: 60px;
         transition: transform 0.3s ease, color 0.3s ease; 
