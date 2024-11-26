@@ -1,6 +1,6 @@
 <template>
   <div class="contenedor">
-    <img src="C:\Users\camil\Downloads\WhatsApp Image 2024-11-23 at 10.53.22 PM.jpeg" class="imagen" alt="imagen 1">
+    <img src="https://i.postimg.cc/QMwjX2vk/Whats-App-Image-2024-11-23-at-10-53-04-PM.jpg" class="imagen" alt="imagen 1">
   </div>
 </template>
 
@@ -20,7 +20,7 @@
   .imagen {
   display: flex;
   height: 100px;
-  width: 120px; 
+  width: 110px; 
   margin-left: 249px;
   margin-top: 10px;
 }
