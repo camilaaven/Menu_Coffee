@@ -248,13 +248,13 @@ window.addEventListener("scroll", () => {
     <div class="carta">
       <img src="https://i.pinimg.com/originals/4f/99/f5/4f99f59b3692364ff2db6a3418f4103d.jpg" alt="Amasijo 3" class="carta-imagen" />
       <h3 class="carta-titulo">Combo 3</h3>
-      <p class="carta-descripcion">Huevos fritos/pericos con cafe</p>
+      <p class="carta-descripcion">Huevos fritos/pericos</p>
       <p class="carta-descripcion">8.000</p>
     </div>
     <div class="carta">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT9j91LLx0TDaL5-jrj427az5fwZ9OFviC0w&s" alt="Amasijo 4" class="carta-imagen" />
             <h3 class="carta-titulo">Combo 4</h3>
-      <p class="carta-descripcion">Huevos fritos/pericos con chocolate</p>
+      <p class="carta-descripcion">Huevos con cafe</p>
       <p class="carta-descripcion">8.000</p>
     </div>
     <div class="carta">
