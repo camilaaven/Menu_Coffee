@@ -260,13 +260,14 @@ window.addEventListener("scroll", () => {
     <div class="carta">
       <img src="https://as2.ftcdn.net/v2/jpg/03/99/65/19/1000_F_399651912_DbqGWOBSWa9ngI2fIZ6JaYfMQyNqhy5l.jpg" alt="Amasijo 4" class="carta-imagen" />
             <h3 class="carta-titulo">Combo 5</h3>
-      <p class="carta-descripcion">Tamal mas chocolate/cafe</p>
+      <p class="carta-descripcion">Tamal y cafe
+      </p>
       <p class="carta-descripcion">9.800</p>
     </div>
     <div class="carta">
       <img src="https://vecinavegetariana.com/wp-content/uploads/2022/09/Changua-Colombiana-Colombian-Milk-and-Eggs-Breakfast-Soup-2-1.jpg" alt="Amasijo 6" class="carta-imagen" />
       <h3 class="carta-titulo">Combo 6</h3>
-      <p class="carta-descripcion">Changua mas almojabana</p>
+      <p class="carta-descripcion">Changua</p>
       <p class="carta-descripcion">9.500</p>
     </div>
     <div class="carta">
