@@ -248,13 +248,13 @@ window.addEventListener("scroll", () => {
     <div class="carta">
       <img src="https://i.pinimg.com/originals/4f/99/f5/4f99f59b3692364ff2db6a3418f4103d.jpg" alt="Amasijo 3" class="carta-imagen" />
       <h3 class="carta-titulo">Combo 3</h3>
-      <p class="carta-descripcion">Huevos fritos/pericos con cafe y un pan</p>
+      <p class="carta-descripcion">Huevos fritos/pericos con cafe</p>
       <p class="carta-descripcion">8.000</p>
     </div>
     <div class="carta">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRT9j91LLx0TDaL5-jrj427az5fwZ9OFviC0w&s" alt="Amasijo 4" class="carta-imagen" />
             <h3 class="carta-titulo">Combo 4</h3>
-      <p class="carta-descripcion">Huevos fritos/pericos con chocolate y un pan</p>
+      <p class="carta-descripcion">Huevos fritos/pericos con chocolate</p>
       <p class="carta-descripcion">8.000</p>
     </div>
     <div class="carta">
@@ -266,13 +266,13 @@ window.addEventListener("scroll", () => {
     <div class="carta">
       <img src="https://vecinavegetariana.com/wp-content/uploads/2022/09/Changua-Colombiana-Colombian-Milk-and-Eggs-Breakfast-Soup-2-1.jpg" alt="Amasijo 6" class="carta-imagen" />
       <h3 class="carta-titulo">Combo 6</h3>
-      <p class="carta-descripcion">Changua mas almojabana y cafe</p>
+      <p class="carta-descripcion">Changua mas almojabana</p>
       <p class="carta-descripcion">9.500</p>
     </div>
     <div class="carta">
       <img src="https://i0.wp.com/chivoloco.com/wp-content/uploads/2020/08/caldo-con-costilla.png?fit=400%2C400&ssl=1" alt="Amasijo 6" class="carta-imagen" />
       <h3 class="carta-titulo">Combo 7</h3>
-      <p class="carta-descripcion">Caldo de costilla mas pan y cafe</p>
+      <p class="carta-descripcion">Caldo de costilla y cafe</p>
       <p class="carta-descripcion">10.000</p>
     </div>
     <div class="carta">
@@ -539,7 +539,7 @@ window.addEventListener("scroll", () => {
       width: 80px;
       font-family: 'Jura', sans-serif;
       margin-left: 558px;
-      font-size: 24px;
+      font-size: 20px;
       margin-top: 60px;
       transition: transform 0.3s ease, color 0.3s ease; 
   }
