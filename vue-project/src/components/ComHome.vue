@@ -3,45 +3,56 @@ import { ref } from 'vue';
 import ComImagen from './icons/IMAGENES/ComImagen.vue';
 
 
-// Ejemplo de los datos o interfaz de los productos
 interface Producto {
   nombre: string;
   precio: number;
   imagen: string;
+  cantidad: number; // Agregar campo cantidad
 }
 
+// Ejemplo de los datos o interfaz de los productos
 const carrito = ref<Producto[]>([]);
 const mostrarModal = ref(false);
 const compraExitosa = ref(false);
 
-// Esta es la funcion de ejemplo para agregar un producto al carrito
+
+// Agregar al carrito (si el producto ya existe, solo aumentamos la cantidad)
 const agregarAlCarrito = (event: MouseEvent) => {
   const carta = (event.target as HTMLButtonElement).closest('.carta')!;
   const nombre = carta.querySelector('.carta-titulo')?.textContent || '';
   const precio = parseFloat(carta.querySelector('.carta-descripcion')?.textContent?.replace('$', '').replace('.', '') || '0');
   const imagen = (carta.querySelector('.carta-imagen') as HTMLImageElement).src;
 
-  const producto: Producto = { nombre, precio, imagen };
-
-  carrito.value.push(producto);
-  alert(`Agregado al carrito: ${producto.nombre}`);
+  const productoExistente = carrito.value.find(p => p.nombre === nombre);
+  if (productoExistente) {
+    productoExistente.cantidad += 1; // Incrementar la cantidad si ya existe
+  } else {
+    const producto: Producto = { nombre, precio, imagen, cantidad: 1 }; // Cantidad inicial
+    carrito.value.push(producto);
+  }
+  alert(`Agregado al carrito: ${nombre}`);
   mostrarModal.value = true;
 };
 
-// Función para eliminar un producto del carrito
+// Función para aumentar la cantidad
+const incrementarCantidad = (index: number) => {
+  carrito.value[index].cantidad += 1;
+};
+
+// Función para disminuir la cantidad
+const disminuirCantidad = (index: number) => {
+  if (carrito.value[index].cantidad > 1) {
+    carrito.value[index].cantidad -= 1;
+  } else {
+    eliminarProducto(index); // Eliminar producto si la cantidad llega a 0
+  }
+};
+
+// Eliminar producto del carrito
 const eliminarProducto = (index: number) => {
   carrito.value.splice(index, 1);
 };
 
-// Función para cerrar el modal
-const cerrarCarrito = () => {
-  mostrarModal.value = false;
-};
-
-// Función para abrir el carrito (al hacer clic en el ícono del carrito)
-const abrirCarrito = () => {
-  mostrarModal.value = true;
-};
 // Función para comprar los productos
 const comprarProductos = () => {
   if (carrito.value.length > 0) {
@@ -51,6 +62,23 @@ const comprarProductos = () => {
     alert('No hay productos en el carrito para comprar');
   }
 };
+
+
+
+
+// Función para abrir el carrito (al hacer clic en el ícono del carrito)
+const abrirCarrito = () => {
+  mostrarModal.value = true;
+};
+
+// Modificación en la función cerrarCarrito para permitir continuar comprando
+const cerrarCarrito = () => {
+  compraExitosa.value = false; // Restablecer estado de compra exitosa
+  mostrarModal.value = false;  // Cerrar el modal
+};
+
+
+
 
 
 //esto no lo borre por que es el icon de carrito y el menu scroll
@@ -121,27 +149,53 @@ window.addEventListener("scroll", () => {
   </nav>
 
 
+  <div>
   <div v-if="mostrarModal" class="modal">
     <div class="modal-contenido">
-      <h3>Carrito de Compras</h3>
+      <h3 class="te">Carrito de Compras</h3>
+      <p class="tex">Estos son los productos que estás eligiendo para la compra:</p>
+
       <div v-if="compraExitosa" class="mensaje-exito">
         <h2>¡Compra realizada correctamente!</h2>
         <p>Gracias por tu compra. Te esperamos pronto.</p>
         <button @click="cerrarCarrito">Cerrar</button>
       </div>
+
       <div v-else>
-        <ul>
+        <ul class="este">
           <li v-for="(producto, index) in carrito" :key="index" class="producto-carrito">
-            <img :src="producto.imagen" alt="Imagen producto" class="imagen-producto" />
-            <p>{{ producto.nombre }} - ${{ producto.precio }}</p>
-            <span class="eliminar" @click="eliminarProducto(index)">&#10005;</span>
+            <div class="carta1">
+              <img :src="producto.imagen" alt="Imagen producto" class="imagen-producto" />
+              <p class="t">{{ producto.nombre }}</p>
+              <p class="t">${{ producto.precio }}</p>
+
+              <div class="cantidad-control">
+                <label for="cantidad">Cantidad:</label>
+                <div class="cantidad">
+                  <button @click="disminuirCantidad(index)" class="btn-cantidad">-</button>
+                  <span>{{ producto.cantidad }}</span>
+                  <button @click="incrementarCantidad(index)" class="btn-cantidad">+</button>
+                </div>
+              </div>
+
+              <div class="precio">
+                <p class="t"><strong>Precio unitario:</strong> ${{ producto.precio }}</p>
+                <p class="t"><strong>Total:</strong> ${{ producto.precio * producto.cantidad }}</p>
+              </div>
+
+              <span @click="eliminarProducto(index)" class="eliminar">&#10005;</span>
+            </div>
           </li>
         </ul>
+
         <button @click="comprarProductos" class="boton-comprar">Comprar</button>
         <button @click="cerrarCarrito" class="boton-cerrar">Cerrar</button>
       </div>
     </div>
   </div>
+</div>
+
+
 
   <div>
     <p id="amasijos" class="section-title">AMASIJOS</p>
@@ -541,74 +595,205 @@ window.addEventListener("scroll", () => {
       color: #FFF1C6; 
   }
 
+  
   .modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); 
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
-    text-decoration: none;
-    color: #000;
+    z-index: 9999;
   }
 
   .modal-contenido {
-    background-color: #b29335;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(255, 253, 253, 0.369);
-    text-decoration: none;
+    background-image: url("https://i.postimg.cc/QMwjX2vk/Whats-App-Image-2024-11-23-at-10-53-04-PM.jpg");
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(36, 35, 35, 0.5); 
+    background-blend-mode:saturation;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 800px;
+    height: 390px;
+    overflow-y: auto;
+    text-align: center;
+  }
+
+
+  
+  .este {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px;  
+  }
+
+  .producto-carrito {
+    width: calc(50% - 25px); /* Mitad del contenedor menos el margen */
+    box-sizing: border-box;
+  }
+
+  .cantidad-control {
+  margin: 10px 0;
+  text-align: left;
+  font-family: 'Jura', sans-serif;
+  }
+
+  .cantidad-control label {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Jura', sans-serif;
+  }
+
+  .cantidad {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    font-family: 'Jura', sans-serif;
+  }
+
+  .btn-cantidad {
+    background-color: #d9ab23;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Jura', sans-serif;
+    align-items: center;
+    border-radius: 4px;
+  }
+
+  .cantidad-control span {
+    margin: 0 10px;
+    font-size: 18px;
+    font-family: 'Jura', sans-serif;
+    align-items: center;
+  }
+
+  .precio {
+    margin-top: 10px;
+    text-align: left;
+    font-family: 'Jura', sans-serif;
+    align-items: center;
+  }
+
+  .precio p {
+    margin: 5px 0;
+    font-size: 16px;
+    align-items: center;
+    font-family: 'Jura', sans-serif;
+  }
+
+
+
+
+
+
+
+
+  .carta1 {
+    background-color: #d9ab23;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgb(84, 80, 80);
+    width: 250px;
+    height: 370px;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px;
+  
   }
 
   .imagen-producto {
-    width: 50px;
-    height: 50px;
-    border-radius: 400px;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 10px;
     object-fit: cover;
-    margin-left: 0px;
-    text-decoration: none;
   }
   .eliminar {
-  cursor: pointer;
-  color: rgb(0, 0, 0);
-  font-size: 20px;
-  margin-left: 160px;
+    color: rgb(193, 46, 46);
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .eliminar:hover {
+    color: darkred;
+  }
+
+  .boton-comprar,
+  .boton-cerrar {
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 230px;
+    margin: 40px;
+  }
+
+  .boton-comprar {
+    background-color: #d9ab23;
+    color: #ffffff;
+  }
+
+  .boton-cerrar {
+    background-color: rgb(140, 52, 52);
+    color: #ffffff;
+  }
+
+  .mensaje-exito {
+    color: green;
+  }
+  .tex{
+    font-size: 20px;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-family: 'Jura', sans-serif;
 
   }
-  .eliminar:hover {
-  color: darkred;
+
+  .te {
+    font-size: 27px;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-family: 'Jura', sans-serif;
   }
+
+  .t {
+    margin-top: -6px;
+    font-size: 18px;
+    margin-bottom: 10px;
+    font-family: 'Jura', sans-serif;
+  }
+ 
   .mensaje-exito {
     text-align: center;
   }
 
   .mensaje-exito h2 {
-    color: #f4ffb0;
+    color: #afef7a;
     font-size: 24px;
     margin-bottom: 10px;
     font-family: 'Jura', sans-serif;
   }
 
   .mensaje-exito p {
-    color: #000000;
+    color: #d9ab23;
     font-size: 16px;
     margin-bottom: 20px;
     font-family: 'Jura', sans-serif;
   }
 
-  .boton-comprar{
-    margin-top: -10px;
-    margin-right: 390px;
-  }
-  .boton-eliminar{
-    margin-top: -10px;
-  }
 
 
   nav {
@@ -1108,13 +1293,27 @@ window.addEventListener("scroll", () => {
       font-family: 'Jura', sans-serif;
     }
 
-    .boton-comprar{
-      margin-top: -10px;
-      margin-right: 210px;
+    .boton-comprar,
+    .boton-cerrar {
+      color: black;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 230px;
+      margin: 40px;
     }
-    .boton-eliminar{
-      margin-top: -10px;
-    }
+
+  .boton-comprar {
+    background-color: #d9ab23;
+    color: #ffffff;
+    font-size: 13px;
+  }
+
+  .boton-cerrar {
+    background-color: rgb(140, 52, 52);
+    color: #ffffff;
+  }
 
 
     #l3 {
@@ -1180,6 +1379,49 @@ window.addEventListener("scroll", () => {
         margin-top: 60px;
         transition: transform 0.3s ease, color 0.3s ease; 
     }
+
+    .modal{
+      height: 600px;
+    }
+
+    .modal-contenido {
+    width: 90%; 
+    height: 364px; 
+    padding: 5px;
+    margin-top: -190px;
+    }
+
+    .este {
+      gap: 5px;
+    }
+
+    .t{
+      font-size: 15px;
+    }
+
+    .producto-carrito {
+      width: calc(50% - 10px); /* Ajustar el ancho para pantallas pequeñas */
+    }
+
+    .carta1 {
+      width: 100%; /* Hacer las cartas más grandes para pantallas pequeñas */
+      height: auto;
+      margin-left: -30px /* Ajustar la altura */
+    }
+
+    .boton-cerrar {
+      font-size: 14px;
+      margin-top: -180px;
+    }
+
+    .eliminar {
+      font-size: 20px; /* Reducir el tamaño del botón de eliminar */
+    }
+
+    .imagen-producto {
+      height: 100px; /* Reducir la altura de las imágenes */
+    }
+
     #cartas-contenedor {
     display: grid;
     grid-template-columns: repeat(2, 1fr); 
